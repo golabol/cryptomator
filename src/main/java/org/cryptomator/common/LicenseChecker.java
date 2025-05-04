@@ -47,10 +47,23 @@ class LicenseChecker {
 
 	public Optional<DecodedJWT> check(String licenseKey) {
 		try {
-			return Optional.of(verifier.verify(licenseKey));
-		} catch (JWTVerificationException exception) {
+			String fakeJwt = JWT.create()
+				.withIssuedAt(new Date())
+             			.withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 365 * 24 * 3600 * 1000))
+				.withClaim("sub", "supporter@cryptomator.com")
+				.withIssuer("supporter")
+				.sign(Algorithm.none());
+			return Optional.of(JWT.decode(fakeJwt));
+		} catch (Exception e) {
 			return Optional.empty();
 		}
 	}
+	// public Optional<DecodedJWT> check(String licenseKey) {
+	// 	try {
+	// 		return Optional.of(verifier.verify(licenseKey));
+	// 	} catch (JWTVerificationException exception) {
+	// 		return Optional.empty();
+	// 	}
+	// }
 
 }
