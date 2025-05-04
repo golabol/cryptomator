@@ -17,6 +17,7 @@ import java.security.interfaces.ECPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Optional;
+import java.util.Date;
 
 @Singleton
 class LicenseChecker {
